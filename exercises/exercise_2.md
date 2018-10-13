@@ -31,3 +31,13 @@ type Mutation {
   applyDiscount(...)
 }
 ```
+
+# Exercise 2.3
+
+A user of our e-commerce platform can create events for their actual shops. An event might be a halloween sale for example. These events have a `name`, a `description`, a list of `attendees`, and have a start time and end time. Design the type to represent an event:
+
+```
+type Event {
+  ...
+}
+```
