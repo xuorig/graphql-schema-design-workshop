@@ -1,28 +1,29 @@
-# Exercise 5: Domain Driven > Data Driven
+## Exercise 5.0: Static Queries
 
-Given this existing `Cart` type, that was generated purely from the underlying implementation, try
-to redesign it into something that answers the domain a little better.
+Given this pseudo code, which builds a query depending on if products should be shown or not, write a GraphQL query
+that could achieve the same but in a static way, using GraphQL variables.
+
+HINT: look into the `@include` and `@skip` directives.
 
 ```
-type Cart {
-  discountCodes: [DiscountCode!]!
-  products: [Product!]!
-  shippingAddress: ShippingAddress
-  billingAddress: BillingAddress
-  shippingPrice: Float
+let fetchProducts = shouldFetchProducts();
+let productsFragment = null;
+
+if fetchProducts {
+  productsFragment = `
+    products { name }
+  `
 }
 
-type Product {
-  quantity: Int!
-  price: Float!
-  taxes: Float!
-  shippable: Boolean
-}
+query = `
+  query {
+    shop {
+      name
+      description
+      ${productsFragment}
+    }
+  }
+`
 
-type DiscountCode {
-  name: String
-  value: Float!
-}
+fetch(query)
 ```
-
-Hint: As a API user, what do I usually want to do with a cart? (How much is my cart? After or before tax? Can the cart be shipped? Are any discounts applied?, etc)
